@@ -1,25 +1,28 @@
 ﻿namespace Sorting.sorting.simple
 {
-    class BubbleSort
+    public static class BubbleSort
     {
-        public static int[] Sorting(int[] vet)
+        public static void Sorting(int[] array, SortingMeasurements measurements)
         {
-            int n = vet.Length;
+            measurements.Reset();
+            measurements.StartTimer();
+            int n = array.Length;
+            measurements.Assignments++;
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n - 1; i++)
             {
-                for (int j = n - 1; j > i; j--)
+                measurements.Assignments++;
+                for (int j = 0; j < n - i - 1; j++)
                 {
-                    if (vet[j] < vet[j - 1])
+                    measurements.Comparisons++;
+                    if (array[j] > array[j + 1])
                     {
-                        int tmp = vet[j];
-                        vet[j] = vet[j - 1];
-                        vet[j - 1] = tmp;
+                        SortingAlgorithms.Swap(array, j, j + 1, measurements);
                     }
                 }
             }
-
-            return vet;
+            measurements.StopTimer();
+            measurements.Print("Bubble Sort");
         }
     }
 }
