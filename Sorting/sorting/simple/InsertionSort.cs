@@ -1,23 +1,37 @@
 ﻿namespace Sorting.sorting.simple
 {
-    class InsertionSort
+    public static class InsertionSort
     {
-        public static int[] Sorting(int[] vet)
+        public static void Sorting(int[] array, SortingMeasurements measurements)
         {
-            int j, x;
-            int n = vet.Length;
+            measurements.Reset();
+            measurements.StartTimer();
+            int n = array.Length;
+            measurements.Assignments++;
+
             for (int i = 1; i < n; i++)
             {
-                x = vet[i];
-                j = i - 1;
-                while (j >= 0 && vet[j] > x)
+                int key = array[i];
+                int j = i - 1;
+                measurements.Assignments += 2;
+
+                while (j >= 0)
                 {
-                    vet[j + 1] = vet[j];
-                    j--;
+                    measurements.Comparisons++;
+                    if (array[j] > key)
+                    {
+                        array[j + 1] = array[j];
+                        measurements.Assignments++;
+                        j--;
+                    }
+                    else break;
                 }
-                vet[j + 1] = x;
+
+                array[j + 1] = key;
+                measurements.Assignments++;
             }
-            return vet;
+            measurements.StopTimer();
+            measurements.Print("Insertion Sort");
         }
     }
 }

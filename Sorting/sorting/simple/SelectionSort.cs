@@ -1,28 +1,32 @@
 ﻿namespace Sorting.sorting.simple
 {
-    class SelectionSort
+    public static class SelectionSort
     {
-        public static int[] Sorting(int[] vet)
+        public static void Sorting(int[] array, SortingMeasurements measurements)
         {
-            int n = vet.Length;
-            int min;
+            measurements.Reset();
+            measurements.StartTimer();
+            int n = array.Length;
+            measurements.Assignments++;
+
             for (int i = 0; i < n - 1; i++)
             {
-                min = i;
+                int minIdx = i;
+                measurements.Assignments++;
+
                 for (int j = i + 1; j < n; j++)
                 {
-                    if (vet[j] < vet[min])
-                    {
-                        min = j;
-                    }
+                    measurements.Comparisons++;
+                    if (array[j] < array[minIdx])
+                        minIdx = j;
+                    measurements.Assignments++;
                 }
 
-                int tmp = vet[i];
-                vet[i] = vet[min];
-                vet[min] = tmp;
+                if (minIdx != i)
+                    SortingAlgorithms.Swap(array, i, minIdx, measurements);
             }
-
-            return vet;
+            measurements.StopTimer();
+            measurements.Print("Selection Sort");
         }
     }
 }
